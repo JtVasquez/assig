@@ -1,0 +1,301 @@
+
+
+#include <iostream>
+using namespace std;
+
+bool validateven(int x)
+{
+    bool status = true;
+    if (x % 2 != 0)
+    {
+        status = false;
+    }
+    return status;
+}
+
+int main()
+{
+    string response, name;
+    int width, height, call = 1;
+    cout << "What is your name? ";
+    cin >> name;
+    cout << "Well " << name << ", welcome to the house drawing program." << endl;
+    cout << "Do you want me to draw a simple house for you? (yes/no) ";
+    cin >> response;
+    cout << "\n";
+    if (response == "yes")
+    {
+        while (call > 0)
+        {
+            cout << "Enter height of the house you want me to draw: ";
+            cin >> height;
+
+            for (int i = 0; i < 3; i++)
+            {
+                cout << "\nPlease enter an even number for the width of the house (must be even numbers and bigger than 2) ";
+                cin >> width;
+                if (width % 2 != 0)
+                {
+                    cout << "You entered " << width << " for the width. Not an even number!" << endl;
+                }
+                else if (width <= 2)
+                {
+                    cout << "You entered " << width << " for the width. Must be greater than 2!" << endl;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            cout << endl;
+            int roof_height = width / 2;
+            for (int i = 1; i <= roof_height; i++)
+            {
+                for (int j = 1; j <= roof_height - i + 1; j++)
+                {
+                    cout << " ";
+                }
+                for (int j = 1; j <= 2 * i; j++)
+                {
+                    cout << "*";
+                }
+                cout << endl;
+            }
+            for (int i = 1; i <= height; i++)
+            {
+                cout << "|";
+                for (int j = 1; j <= width; j++)
+                {
+                    cout << " ";
+                }
+                cout << "|" << endl;
+            }
+            cout << " ";
+            for (int i = 1; i <= width; i++)
+            {
+                cout << "-";
+            }
+            cout << " " << endl;
+            if (call > 0)
+            {
+                string play;
+                cout << "\nDo you want me to draw a simple house for you? (yes/no) ";
+                cin >> play;
+                if (play == "yes")
+                {
+                    cout << "\n";
+                    call++;
+                }
+                else if (play == "no")
+                {
+                    cout << "\nlike your " << call << " houses!" << endl;
+                    return 0;
+                }
+            }
+        }
+    }
+    else if (response == "no")
+    {
+        cout << "Goodbye!" << endl;
+    }
+
+    return 0;
+}
+
+---------------------------Question 2-------------------------------------
+
+#include <iostream>
+
+using namespace std;
+
+void updateBalance(int& balance, int x)
+{
+	balance += x;
+}
+
+
+bool verify(int a, int b)
+{
+	bool status = true;
+	if (a != b)
+	{
+		status = false;
+	}
+	return status;
+}
+int main()
+{
+	int balance = 1000;
+	int accountNumber = 40264224;
+	int password = 2468;
+	int x, y;
+	int decision, amount;
+
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "Please enter account number: ";
+		cin >> x;
+		cout << "\n";
+		if (i == 2)
+		{
+			cout << "error\n" << endl;
+			return 0;
+		}
+		if (verify(accountNumber, x) == 1)
+		{
+			goto good;
+		}
+		cout << "\nPlease retry\n" << endl;
+	}
+good:
+
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "please enter password: ";
+		cin >> y;
+		cout << "\n";
+		if (i == 2)
+		{
+			cout << "error\n" << endl;
+			return 0;
+		}
+		else if (verify(password, y) == 1)
+		{
+			goto begin3;
+		}
+		cout << "\nPlease retry\n" << endl;
+	}
+begin3:
+	cout << "1: check balance" << endl;
+	cout << "2: withdraw" << endl;
+	cout << "3: deposit" << endl;
+	cout << "4: exit\n" << endl;
+	cout << "Choice: ";
+	cin >> decision;
+	cout << endl;
+	int j, withdraw;
+	switch (decision)
+	{
+	case 1: //check balance
+	{
+		cout << "Your balance is: $" << balance << endl;
+		cout << "\n1: access menu" << endl;
+		cout << "2: leave system\n" << endl;
+	case1:
+		cout << "Choice: ";
+		cin >> j;
+		cout << endl;
+		switch (j)
+		{
+		case 1:
+		{
+			goto begin3;
+			break;
+		}
+		case 2:
+		{
+			cout << "Thank you" << endl;
+			return 0;
+			break;
+		}
+		default:
+		{
+			goto case1;
+			break;
+		}
+		break;
+		}
+	}
+	case 2: //withdraw
+	{
+		cout << "Enter ammount you wish to redraw ($1 - $" << balance << "): ";
+	retry2:
+		cin >> amount;
+		if (amount > balance || amount <= 0)
+		{
+			cout << "\nInvalid, enter a value between $1 and $" << balance << ": ";
+			goto retry2;
+		}
+		updateBalance(balance, -amount);
+		cout << "\nNew balance: $" << balance << endl;
+		cout << "\n1: access menu" << endl;
+		cout << "2: leave system\n" << endl;
+	case2:
+		cout << "Choice: ";
+		cin >> j;
+		cout << endl;
+		switch (j)
+		{
+		case 1:
+		{
+			goto begin3;
+			break;
+		}
+		case 2:
+		{
+			cout << "Thank you\n" << endl;
+			return 0;
+			break;
+		}
+		default:
+		{
+			goto case2;
+			break;
+		}
+		}
+		break;
+	}
+	case 3: //deposit
+	{
+		cout << "Enter amount you would like to deposit($0 - $1000) : ";
+	retry3:
+		cin >> amount;
+		if (amount > 1000 || amount < 0)
+		{
+			cout << "\nInvalid, enter a value between $0 and $1000: ";
+			goto retry3;
+		}
+		updateBalance(balance, amount);
+		cout << "\nNew balance: $" << balance << endl;
+		cout << "\n1: access menu" << endl;
+		cout << "2: leave system\n" << endl;
+	case3:
+		cout << "Choice: ";
+		cin >> j;
+		cout << endl;
+		switch (j)
+		{
+		case 1:
+		{
+			goto begin3;
+			break;
+		}
+		case 2:
+		{
+			cout << "Thank you\n" << endl;
+			return 0;
+			break;
+		}
+		default:
+		{
+			goto case3;
+			break;
+		}
+		}
+	}
+	case 4:
+	{
+		cout << "Thank you!\n" << endl;
+		return 0;
+		break;
+	}
+	default:
+	{
+		cout << "Please retry\n" << endl;
+		goto begin3;
+		break;
+	}
+	return 0;
+	}
+}
